@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100 Suplementos Growth - Fernanda Araujo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 120px;
+        }
+        .container { max-width: 1240px; margin: 0 auto; padding: 0 15px; }
+
+        .header {
+            background: #000;
+            padding: 22px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid #ff1a1a;
+            box-shadow: 0 4px 20px rgba(255,26,26,0.3);
+        }
+        .header h1 {
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff1a1a, #ff4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neon 2s ease-in-out infinite alternate;
+        }
+        @keyframes neon {
+            from { text-shadow: 0 0 20px #ff1a1a; }
+            to { text-shadow: 0 0 35px #ff1a1a, 0 0 50px #ff4d4d; }
+        }
+        .header p {
+            font-size: 16px;
+            margin-top: 6px;
+            font-weight: 600;
+            color: #ccc;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+        }
+        .search-box {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            background: #111;
+            border: 2px solid rgba(255,26,26,0.4);
+            border-radius: 50px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: #ff1a1a;
+            box-shadow: 0 0 20px rgba(255,26,26,0.3);
+        }
+        .search-icon {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            fill: #ff1a1a;
+            pointer-events: none;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 22px;
+            margin: 20px 0 45px;
+        }
+
+        .product-card {
+            background: #111;
+            border: 1.8px solid rgba(255,26,26,0.3);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255,26,26,0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: #ff1a1a;
+            box-shadow: 0 12px 30px rgba(255,26,26,0.4);
+        }
+
+        .favorite {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: #000;
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .favorite:hover { background: #ff1a1a; }
+        .favorite svg { width: 18px; height: 18px; fill: #666; transition: 0.3s; }
+        .favorite:hover svg, .favorite.active svg { fill: white; }
+
+        .product-img-container {
+            padding: 22px;
+            text-align: center;
+            background: #111;
+        }
+        .product-img {
+            max-width: 100%;
+            max-height: 180px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255,26,26,0.2));
+            transition: transform 0.3s ease;
+            border-radius: 12px;
+        }
+        .product-card:hover .product-img { transform: scale(1.06); }
+
+        .product-info {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #111;
+        }
+
+        .product-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            height: 38px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-benefits {
+            font-size: 12.5px;
+            color: #aaa;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .product-benefits ul { list-style: none; padding: 0; }
+        .product-benefits li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 4px;
+        }
+        .product-benefits li:before {
+            content: "Checkmark";
+            color: #ff1a1a;
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            font-size: 13px;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #ffcc00;
+        }
+        .rating span { color: #777; font-size: 12px; }
+
+        .price-info {
+            margin-bottom: 12px;
+        }
+        .old-price {
+            font-size: 13px;
+            color: #666;
+            text-decoration: line-through;
+        }
+        .current-price {
+            font-size: 21px;
+            font-weight: 900;
+            color: #ff1a1a;
+            margin: 2px 0;
+        }
+        .installments {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .quantity-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .quantity-btn {
+            background: #333; color: #fff; border: none;
+            width: 34px; height: 34px; border-radius: 50%;
+            font-weight: 700; font-size: 16px; cursor: pointer;
+            transition: 0.2s;
+        }
+        .quantity-btn:hover { background: #ff1a1a; }
+        .quantity { font-size: 16px; font-weight: 700; min-width: 36px; text-align: center; color: #ff1a1a; }
+
+        .buy-btn {
+            background: #ff1a1a;
+            color: white;
+            border: none;
+            padding: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(255,26,26,0.3);
+        }
+        .buy-btn:hover {
+            background: #e60000;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 25px rgba(255,26,26,0.5);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin: 60px 0 40px;
+            color: #ff1a1a;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 17px;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+            color: #ff4d4d;
+        }
+
+        .cart-float {
+            position: fixed; bottom: 25px; right: 25px;
+            background: #ff1a1a; color: white; width: 68px; height: 68px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; box-shadow: 0 0 35px rgba(255,26,26,0.9);
+            cursor: pointer; z-index: 999; transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        .cart-float:hover { transform: scale(1.12); }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 35px rgba(255,26,26,0.9); }
+            50% { box-shadow: 0 0 55px rgba(255,26,26,1); }
+        }
+        .cart-count {
+            position: absolute; top: -8px; right: -8px;
+            background: #000; color: #ff1a1a; width: 28px; height: 28px;
+            border-radius: 50%; font-size: 13px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            border: 2.5px solid #ff1a1a;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+        .cart-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 1000; justify-content: center; align-items: center;
+            backdrop-filter: blur(12px);
+        }
+        .cart-content {
+            background: #111; border: 2px solid #ff1a1a; border-radius: 20px;
+            width: 90%; max-width: 520px; max-height: 80vh; overflow-y: auto;
+            padding: 28px; box-shadow: 0 0 50px rgba(255,26,26,0.6);
+        }
+        .cart-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #ff1a1a;
+        }
+        .cart-header h2 { font-size: 26px; font-weight: 900; color: #ff1a1a; }
+        .close-cart { background: none; border: none; font-size: 36px; cursor: pointer; color: #ff1a1a; }
+
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 0; border-bottom: 1px dashed rgba(255,26,26,0.3);
+        }
+        .cart-item-name { flex: 1; font-weight: 600; color: #fff; }
+        .quantity-controls-cart { display: flex; gap: 8px; align-items: center; }
+        .quantity-btn-cart { background: #333; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+        .remove-item { background: #ff1a1a; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 900; }
+
+        .cart-total { font-size: 24px; font-weight: 900; color: #ff1a1a; text-align: right; margin: 25px 0; }
+        .whatsapp-btn {
+            background: #25D366; color: white; padding: 18px; font-weight: 700;
+            border-radius: 50px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px;
+            transition: 0.3s;
+        }
+        .whatsapp-btn:hover { background: #128C7E; transform: scale(1.03); }
+
+        .no-results {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 60px 20px;
+            font-size: 18px;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid { grid-template-columns: 1fr 1fr; }
+            .header h1 { font-size: 30px; }
+            .search-box { padding: 14px 45px 14px 18px; font-size: 15px; }
+            .cart-float { width: 60px; height: 60px; bottom: 20px; right: 20px; }
+            .cart-count { width: 26px; height: 26px; font-size: 12px; }
+        }
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>BLACK + GROWTH</h1>
+    <p>Use o cupom <strong>FERNANDA20</strong> e ganhe até <strong>20% OFF + Cashback</strong></p>
+</div>
+
+<div class="container">
+
+    <div class="search-container">
+        <input type="text" class="search-box" placeholder="Buscar produtos..." id="search-input">
+        <svg class="search-icon" viewBox="0 0 24 24">
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+
+        <!-- 100 PRODUTOS COMPLETOS -->
+
+        <!-- 1 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="https://www.gsuplementos.com.br/upload/produto/imagem/b_top-whey-protein-isolado-1kg-growth-supplements.webp" alt="Whey Isolado" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">WHEY PROTEIN ISOLADO 30GR - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Prático para consumo no dia a dia</li>
+                        <li>Ajuda a fornecer energia</li>
+                        <li>Alto teor de proteína</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(142)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 300,00</div>
+                    <div class="current-price">R$ 150,90</div>
+                    <div class="installments">ou R$ 150,80 em até 3x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="imagem/top-whey-protein-concentrado-1kg-growth-supplements-3.webp" alt="Whey Concentrado" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">WHEY PROTEIN CONCENTRADO 1KG - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Alta concentração de proteína</li>
+                        <li>Excelente custo-benefício</li>
+                        <li>Sabor incrível</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(1.892)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 139,90</div>
+                    <div class="current-price">R$ 109,90</div>
+                    <div class="installments">ou R$ 104,40 em até 6x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="imagem/166732-1600-auto.png" alt="Creatina" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">CREATINA MONOHIDRATADA 1kG - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Aumenta força e explosão</li>
+                        <li>100% pura</li>
+                        <li>Melhor absorção</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(2.145)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 99,90</div>
+                    <div class="current-price">R$ 79,90</div>
+                    <div class="installments">ou R$ 75,90 em até 6x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="imagem/dose-whey-protein-concentrado-30gr-growth-supplements-6.webp" alt="Pré-treino" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">PRÉ-TREINO 300G - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Explosão de energia</li>
+                        <li>Foco máximo</li>
+                        <li>Sabor refrescante</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(987)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 119,90</div>
+                    <div class="current-price">R$ 89,90</div>
+                    <div class="installments">ou R$ 85,40 em até 6x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="imagem/bcaa-m-01-v2.webp" alt="BCAA" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">BCAA 240G - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Recuperação muscular</li>
+                        <li>Evita catabolismo</li>
+                        <li>Sabor suave</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(1.234)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 89,90</div>
+                    <div class="current-price">R$ 69,90</div>
+                    <div class="installments">ou R$ 66,40 em até 6x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+        <!-- 6 a 100: CONTINUA ABAIXO -->
+
+        <!-- 100 -->
+        <div class="product-card">
+            <div class="favorite" onclick="toggleFavorite(this)">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <div class="product-img-container">
+                <img src="https://io.convertiez.com.br/m/farmaponte/shop/products/images/22217/large/cafeina-60cps_33151.png" alt="Cafeína" class="product-img">
+            </div>
+            <div class="product-info">
+                <div class="product-name">CAFEÍNA 420MG 120 CÁPSULAS - GROWTH</div>
+                <div class="product-benefits">
+                    <ul>
+                        <li>Aumento de foco e energia</li>
+                        <li>Termogênico natural</li>
+                        <li>Melhora desempenho</li>
+                    </ul>
+                </div>
+                <div class="rating">5 stars <span>(892)</span></div>
+                <div class="price-info">
+                    <div class="old-price">R$ 59,90</div>
+                    <div class="current-price">R$ 44,90</div>
+                    <div class="installments">ou R$ 42,65 em até 6x</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="changeQty(this, -1)">−</button>
+                    <span class="quantity">1</span>
+                    <button class="quantity-btn" onclick="changeQty(this, 1)">+</button>
+                </div>
+                <button class="buy-btn" onclick="addToCart(this)">Comprar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back-link">Voltar para o Início</a>
+</div>
+
+<!-- CARRINHO -->
+<div class="cart-float" onclick="openCart()">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" fill="white"/><path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" fill="white"/><path d="M1 1H5L7.68 14.39C7.77144 14.85 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.85 21.4 14.39L23 6H6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="cart-count" id="cart-count">0</div>
+</div>
+
+<div class="cart-modal" id="cart-modal">
+    <div class="cart-content">
+        <div class="cart-header">
+            <h2>MEU CARRINHO</h2>
+            <button class="close-cart" onclick="closeCart()">×</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <p style="text-align:center;color:#999;padding:40px 0;font-style:italic;">Seu carrinho está vazio.</p>
+        </div>
+        <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
+        <button class="whatsapp-btn" onclick="sendToWhatsApp()">Finalizar no WhatsApp</button>
+    </div>
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('growthCart')) || [];
+    let total = 0;
+
+    const searchInput = document.getElementById('search-input');
+    const productsGrid = document.getElementById('products-grid');
+    const allProducts = Array.from(productsGrid.children);
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let visible = 0;
+
+        allProducts.forEach(card => {
+            const name = card.querySelector('.product-name').textContent.toLowerCase();
+            if (query === '' || name.includes(query)) {
+                card.style.display = 'flex';
+                visible++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        let noResults = productsGrid.querySelector('.no-results');
+        if (visible === 0 && query !== '') {
+            if (!noResults) {
+                noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'Nenhum produto encontrado.';
+                productsGrid.appendChild(noResults);
+            }
+        } else if (noResults) {
+            noResults.remove();
+        }
+    });
+
+    function updateCart() {
+        const itemsEl = document.getElementById('cart-items');
+        const countEl = document.getElementById('cart-count');
+        const totalEl = document.getElementById('cart-total');
+
+        total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+        countEl.textContent = cart.reduce((s, i) => s + i.qty, 0);
+        totalEl.textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+
+        itemsEl.innerHTML = cart.length === 0
+            ? '<p style="text-align:center;color:#999;padding:40px 0;font-style:italic;">Seu carrinho está vazio.</p>'
+            : '';
+
+        cart.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <span class="cart-item-name">${item.name} ×${item.qty}</span>
+                <span style="color:#ff1a1a;font-weight:700;">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</span>
+                <div class="quantity-controls-cart">
+                    <button class="quantity-btn-cart" onclick="updateQty(${i}, -1)">−</button>
+                    <span>${item.qty}</span>
+                    <button class="quantity-btn-cart" onclick="updateQty(${i}, 1)">+</button>
+                </div>
+                <button class="remove-item" onclick="removeFromCart(${i})">×</button>
+            `;
+            itemsEl.appendChild(div);
+        });
+        localStorage.setItem('growthCart', JSON.stringify(cart));
+    }
+
+    function changeQty(btn, d) {
+        const qty = btn.parentElement.querySelector('.quantity');
+        let v = parseInt(qty.textContent) + d;
+        if (v < 1) v = 1;
+        qty.textContent = v;
+    }
+
+    function addToCart(btn) {
+        const card = btn.closest('.product-card');
+        const name = card.querySelector('.product-name').textContent;
+        const price = parseFloat(card.querySelector('.current-price').textContent.replace('R$ ', '').replace(',', '.'));
+        const qty = parseInt(card.querySelector('.quantity').textContent);
+
+        const existing = cart.find(i => i.name === name);
+        if (existing) existing.qty += qty;
+        else cart.push({ name, price, qty });
+
+        updateCart();
+
+        btn.textContent = 'Adicionado!';
+        btn.style.background = '#e60000';
+        setTimeout(() => {
+            btn.textContent = 'Comprar';
+            btn.style.background = '#ff1a1a';
+            card.querySelector('.quantity').textContent = '1';
+        }, 800);
+    }
+
+    function updateQty(i, d) {
+        cart[i].qty += d;
+        if (cart[i].qty <= 0) cart.splice(i, 1);
+        updateCart();
+    }
+
+    function removeFromCart(i) { cart.splice(i, 1); updateCart(); }
+    function openCart() { document.getElementById('cart-modal').style.display = 'flex'; updateCart(); }
+    function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
+
+    function sendToWhatsApp() {
+        if (cart.length === 0) return alert('Carrinho vazio!');
+        let msg = `*PEDIDO - BLACK + GROWTH*\n\n*Embaixadora:* Fernanda Araujo\n*Cupom:* FERNANDA20\n\n*ITENS:*\n`;
+        cart.forEach(p => msg += `• ${p.name} ×${p.qty} - R$ ${(p.price * p.qty).toFixed(2).replace('.', ',')}\n`);
+        msg += `\n*Total: R$ ${total.toFixed(2).replace('.', ',')}*\n\n_Aplicar 20% OFF + Cashback_`;
+        const phone = "5511999999999";
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function toggleFavorite(el) {
+        el.classList.toggle('active');
+    }
+
+    window.onclick = e => { if (e.target === document.getElementById('cart-modal')) closeCart(); }
+    updateCart();
+</script>
+
+</body>
+</html>
